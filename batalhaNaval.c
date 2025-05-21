@@ -27,25 +27,33 @@ int main() {
     int navioH[3] = {3, 3, 3};
     int navioV[3] = {3, 3, 3};
 
-    //Declarando variáveis para colocar os navios no tabuleiro
+    //Produzindo navios para a diagonal agora
 
-    int linhaH = 4;
-    int colunaH = 5;
+    int navioDiagonal1[3] = {3, 3, 3}; //Diagonal principal
+    int navioDiagonal2[3] = {3, 3, 3}; //Diagonal Secundária
 
-    int linhaV = 1;
-    int colunaV = 3;
 
     //Fazendo a sobreposição de coordenadas no tabuleiro
 
     for (int i = 0; i < 3; i++) //Loop for para a Vertical (Na mesma coluna, com linhas consecutivas)
     {
-        tabuleiro[linhaV + i][colunaV] = navioV[i];
+        tabuleiro[1 + i][8] = navioV[i];
     }
 
     for (int i = 0; i < 3; i++) //Loops for para a Horizontal (Na mesma linha, com colunas consecutivas)
     {
-        tabuleiro[linhaH][colunaH + i] = navioH[i];
+        tabuleiro[4][5 + i] = navioH[i];
     }
+
+    for (int i = 0; i < 3; i++) { //Loop para a diagonal Principal (Verificar se a linha é a mesma da coluna)
+        tabuleiro[1 + i][1 + i] = navioDiagonal1[i];
+    }
+    
+    for ( int i = 0; i < 3; i++) //Loops para a diagonal Secundária (Linha)
+    {
+        tabuleiro[6 + i][4 - i] = navioDiagonal2[i];
+    }
+    
     
     //Exibindo o tabuleiro com Loops aninhados
     printf("TABULEIRO DA BATALHA NAVAL!\n");
