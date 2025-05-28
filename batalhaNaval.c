@@ -4,69 +4,19 @@
 // Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
 // Siga os comentários para implementar cada parte do desafio.
 
+#define TAM_TABULEIRO 10
+#define TAM_HABILIDADE 5
+#define CENTRO_HABILIDADE 2
+
+#define NAVIO 3
+#define AGUA 0
+#define HABILIDADE 5
+
 int main() {
     // Nível Novato - Posicionamento dos Navios
     // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
     // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
     // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
-
-
-    //Fazendo a matriz do tabuleiro 10x10.
-    int tabuleiro[10][10];
-
-    for (int i = 0; i < 10; i++) //Loop usado para programar o tabuleiro 10x10, dois loops
-    {
-        for (int j = 0; j < 10; j++)
-        {
-            tabuleiro[i][j] = 0;
-        }
-    }
-
-    //Produzindo os navios com os vetores
-
-    int navioH[3] = {3, 3, 3};
-    int navioV[3] = {3, 3, 3};
-
-    //Produzindo navios para a diagonal agora
-
-    int navioDiagonal1[3] = {3, 3, 3}; //Diagonal principal
-    int navioDiagonal2[3] = {3, 3, 3}; //Diagonal Secundária
-
-
-    //Fazendo a sobreposição de coordenadas no tabuleiro
-
-    for (int i = 0; i < 3; i++) //Loop for para a Vertical (Na mesma coluna, com linhas consecutivas)
-    {
-        tabuleiro[1 + i][8] = navioV[i];
-    }
-
-    for (int i = 0; i < 3; i++) //Loops for para a Horizontal (Na mesma linha, com colunas consecutivas)
-    {
-        tabuleiro[4][5 + i] = navioH[i];
-    }
-
-    for (int i = 0; i < 3; i++) { //Loop para a diagonal Principal (Verificar se a linha é a mesma da coluna)
-        tabuleiro[1 + i][1 + i] = navioDiagonal1[i];
-    }
-    
-    for ( int i = 0; i < 3; i++) //Loops para a diagonal Secundária (Linha)
-    {
-        tabuleiro[6 + i][4 - i] = navioDiagonal2[i];
-    }
-    
-    
-    //Exibindo o tabuleiro com Loops aninhados
-    printf("TABULEIRO DA BATALHA NAVAL!\n");
-    
-    for (int i = 0; i < 10; i++)
-    {
-        for (int j = 0; j < 10; j++)
-        {
-            printf("%d ", tabuleiro[i][j]);
-        }
-        printf("\n");
-    }
-    
 
     // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
     // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
@@ -93,6 +43,45 @@ int main() {
     // 0 0 1 0 0
     // 1 1 1 1 1
     // 0 0 1 0 0
+
+       int tabuleiro[TAM_TABULEIRO][TAM_TABULEIRO] = {0};
+    int cone[TAM_HABILIDADE][TAM_HABILIDADE];
+
+    // Criar cone
+    for (int i = 0; i < TAM_HABILIDADE; i++) {
+        for (int j = 0; j < TAM_HABILIDADE; j++) {
+            if (j >= CENTRO_HABILIDADE - i && j <= CENTRO_HABILIDADE + i) {
+                cone[i][j] = 1;
+            } else {
+                cone[i][j] = 0;
+            }
+        }
+    }
+
+    // Ponto de origem no tabuleiro
+    int origem_linha = 5;
+    int origem_coluna = 5;
+
+    for (int i = 0; i < TAM_HABILIDADE; i++) {
+        for (int j = 0; j < TAM_HABILIDADE; j++) {
+            if (cone[i][j] == 1) {
+                int lin = origem_linha - CENTRO_HABILIDADE + i;
+                int col = origem_coluna - CENTRO_HABILIDADE + j;
+
+                if (lin >= 0 && lin < TAM_TABULEIRO && col >= 0 && col < TAM_TABULEIRO) {
+                    tabuleiro[lin][col] = HABILIDADE;
+                }
+            }
+        }
+    }
+
+    // Mostrar tabuleiro
+    for (int i = 0; i < TAM_TABULEIRO; i++) {
+        for (int j = 0; j < TAM_TABULEIRO; j++) {
+            printf("%d ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
 
     return 0;
 }
